@@ -32,7 +32,11 @@ struct QuotaSnapshot {
     var fetchedAt: Date
 
     var topPercentage: Double? {
-        limits.compactMap { $0.percentage }.max()
+        let fiveHour = limits.first {
+            let t = $0.type.uppercased()
+            return t.contains("TOKEN") && !t.contains("WEEK")
+        }
+        return fiveHour?.percentage ?? limits.compactMap { $0.percentage }.max()
     }
 }
 

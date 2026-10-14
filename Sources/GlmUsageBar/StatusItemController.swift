@@ -80,8 +80,12 @@ final class StatusItemController: NSObject, NSApplicationDelegate {
         button.image = image
         button.imagePosition = .imageLeading
         button.title = text
-        button.font = NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        let font = NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        button.font = font
         button.toolTip = tooltipText()
+
+        let titleWidth = (text as NSString).size(withAttributes: [.font: font]).width
+        statusItem.length = ceil(titleWidth) + (image?.size.width ?? 0) + 16
     }
 
     private func tooltipText() -> String {
